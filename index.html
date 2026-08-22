@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>言葉と失われたフレーズ</title>
+    <title>言葉と失われたフレーズ - 日本語</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -122,7 +122,7 @@
         <div class="controls">
             <button id="homeBtn">🏠 Home</button>
             <select id="blockSelect"></select>
-            <button id="prevBtn">&larr; 戻る</button>
+            <button id="prevBtn">&larr; 前へ</button>
             <button id="nextBtn">次へ &rarr;</button>
             <button id="randomBtn">🎲 ランダム</button>
         </div>
@@ -138,7 +138,7 @@
     </div>
 
 <script>
-    // Estrictamente 18 bloques en japonés
+    // 18 blocks en japonés
     const blockNamesJP = [
         "第1ブロック：運命の幾何学",
         "第2ブロック：魂の建築",
@@ -190,7 +190,7 @@
         }
         try {
             const response = await fetch('frases.json?t=' + Date.now());
-            if (!response.ok) throw new Error("HTTPエラー " + response.status);
+            if (!response.ok) throw new Error("Error HTTP " + response.status);
             allFrases = await response.json();
             if (loadingElem) loadingElem.style.display = 'none';
 
@@ -199,7 +199,7 @@
 
             filterByBlock(parseInt(activeBlock, 10), true);
         } catch (error) {
-            console.error("データの読み込みエラー:", error);
+            console.error("Error al cargar datos:", error);
             if (loadingElem) {
                 loadingElem.style.display = 'block';
                 loadingElem.textContent = "frases.json の読み込みに失敗しました";
