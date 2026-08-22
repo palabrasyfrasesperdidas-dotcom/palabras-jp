@@ -1,129 +1,208 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Palabras y frases perdidas</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #0d0d0d;
-      color: #ffffff;
-      font-family: 'Georgia', serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-
-    .tarjeta-container {
-      position: relative;
-      width: 90%;
-      max-width: 420px;
-      aspect-ratio: 2 / 3;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-      background-size: cover;
-      background-position: center;
-    }
-
-    /* �rea central donde va superpuesta la frase sobre la plantilla */
-    .contenido-frase {
-      position: absolute;
-      top: 32%;
-      left: 10%;
-      right: 10%;
-      bottom: 25%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 10px;
-    }
-
-    .texto-huella {
-      font-size: 1.25rem;
-      line-height: 1.5;
-      color: #f5f5f5;
-      font-style: italic;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.9);
-    }
-
-    .numero-huella {
-      margin-top: 15px;
-      font-size: 0.8rem;
-      letter-spacing: 2px;
-      color: #a3a3a3;
-      text-transform: uppercase;
-    }
-
-    .boton-accion {
-      margin-top: 25px;
-      padding: 12px 28px;
-      background-color: transparent;
-      color: #d4af37;
-      border: 1px solid #d4af37;
-      border-radius: 25px;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      letter-spacing: 1px;
-    }
-
-    .boton-accion:hover {
-      background-color: #d4af37;
-      color: #000;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>言葉と失われたフレーズ | Palabras y frases perdidas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.4rem;
+            margin-bottom: 5px;
+            color: #e0e0e0;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin: 30px 0 15px 0;
+            color: #cccccc;
+        }
+        p.subtitle {
+            font-size: 1.15rem;
+            color: #888888;
+            margin-bottom: 25px;
+        }
+        .section-container {
+            width: 100%;
+            max-width: 760px;
+            margin-bottom: 40px;
+        }
+        .media-wrapper {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.85);
+            background: #000;
+            margin-bottom: 15px;
+        }
+        .media-wrapper video,
+        .media-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+        .lang-select-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .lang-select-container a {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background-color: #1f1f1f;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .lang-select-container a:hover {
+            background-color: #333;
+            border-color: #777;
+            transform: translateY(-2px);
+        }
+    </style>
 </head>
 <body>
 
-  <div class="tarjeta-container" id="tarjeta">
-    <div class="contenido-frase">
-      <div class="texto-huella" id="textoFrase">Cargando huella...</div>
-      <div class="numero-huella" id="numeroHuella"></div>
+    <h1>言葉と失われたフレーズ</h1>
+    <p class="subtitle">足跡と考察のコレクション (Colección de huellas y reflexiones)</p>
+
+    <!-- Bloque 1: 運命の幾何学 -->
+    <div class="section-container">
+        <h2>運命の幾何学</h2>
+        <div class="media-wrapper">
+            <video controls src="plantilla1_video_jp.mp4"></video>
+        </div>
+        <div class="media-wrapper">
+            <img src="plantilla1_jp.png" alt="運命の幾何学 - Plantilla 1">
+        </div>
     </div>
-  </div>
 
-  <button class="boton-accion" onclick="mostrarFraseAleatoria()">Descubrir otra huella</button>
+    <!-- Bloque 2: 魂の建築 -->
+    <div class="section-container">
+        <h2>魂の建築</h2>
+        <div class="media-wrapper">
+            <video controls src="plantilla2_video_jp.mp4"></video>
+        </div>
+        <div class="media-wrapper">
+            <img src="plantilla2_jp.png" alt="魂の建築 - Plantilla 2">
+        </div>
+    </div>
 
-  <script>
-    let todasLasFrases = [];
+    <!-- Bloque 3: 沈黙の解剖学 -->
+    <div class="section-container">
+        <h2>沈黙の解剖学</h2>
+        <div class="media-wrapper">
+            <video controls src="plantilla3_video_jp.mp4"></video>
+        </div>
+        <div class="media-wrapper">
+            <img src="plantilla3_jp.png" alt="沈黙の解剖学 - Plantilla 3">
+        </div>
+    </div>
 
-    // Mapeo de plantillas por bloque
-    const plantillasPorBloque = {
-      1: 'plantilla1.png'
-    };
+    <!-- Bloque 4: 恐れとその影 -->
+    <div class="section-container">
+        <h2>恐れとその影</h2>
+        <div class="media-wrapper">
+            <video controls src="plantilla4_video_jp.mp4"></video>
+        </div>
+        <div class="media-wrapper">
+            <img src="plantilla4_jp.png" alt="恐れとその影 - Plantilla 4">
+        </div>
+    </div>
 
-    // Cargar frases desde el archivo JSON
-    fetch('frases.json')
-      .then(response => response.json())
-      .then(data => {
-        todasLasFrases = data;
-        mostrarFraseAleatoria();
-      })
-      .catch(error => console.error('Error al cargar las frases:', error));
+    <!-- Plantilla 5 -->
+    <div class="section-container">
+        <h2>Plantilla 5</h2>
+        <div class="media-wrapper">
+            <video controls src="plantilla5_video_jp.mp4"></video>
+        </div>
+        <div class="media-wrapper">
+            <img src="plantilla5_jp.png" alt="Plantilla 5">
+        </div>
+    </div>
 
-    function mostrarFraseAleatoria() {
-      if (todasLasFrases.length === 0) return;
+    <!-- Plantilla 6 -->
+    <div class="section-container">
+        <h2>Plantilla 6</h2>
+        <div class="media-wrapper">
+            <video controls src="plantilla6_video_jp.mp4"></video>
+        </div>
+        <div class="media-wrapper">
+            <img src="plantilla6_jp.png" alt="Plantilla 6">
+        </div>
+    </div>
 
-      // Selecci�n aleatoria
-      const indice = Math.floor(Math.random() * todasLasFrases.length);
-      const seleccionada = todasLasFrases[indice];
+    <!-- Plantilla 7 -->
+    <div class="section-container">
+        <h2>Plantilla 7</h2>
+        <div class="media-wrapper">
+            <video controls src="plantilla7_video_jp.mp4"></video>
+        </div>
+        <div class="media-wrapper">
+            <img src="plantilla7_jp.png" alt="Plantilla 7">
+        </div>
+    </div>
 
-      // Aplicar plantilla de fondo seg�n el bloque
-      const tarjeta = document.getElementById('tarjeta');
-      const imagenFondo = plantillasPorBloque[seleccionada.bloque] || 'plantilla1.png';
-      tarjeta.style.backgroundImage = `url('${imagenFondo}')`;
+    <!-- Plantilla 8 -->
+    <div class="section-container">
+        <h2>Plantilla 8</h2>
+        <div class="media-wrapper">
+            <video controls src="plantilla8_video_jp.mp4"></video>
+        </div>
+        <div class="media-wrapper">
+            <img src="plantilla8_jp.png" alt="Plantilla 8">
+        </div>
+    </div>
 
-      // Mostrar texto y n�mero de huella
-      document.getElementById('textoFrase').innerText = `"${seleccionada.texto}"`;
-      document.getElementById('numeroHuella').innerText = `Huella ${seleccionada.id.toString().padStart(2, '0')}`;
-    }
-  </script>
+    <!-- Plantilla 9 -->
+    <div class="section-container">
+        <h2>Plantilla 9</h2>
+        <div class="media-wrapper">
+            <video controls src="plantilla9_video_jp.mp4"></video>
+        </div>
+        <div class="media-wrapper">
+            <img src="plantilla9_jp.png" alt="Plantilla 9">
+        </div>
+    </div>
+
+    <!-- Plantilla 10 -->
+    <div class="section-container">
+        <h2>Plantilla 10</h2>
+        <div class="media-wrapper">
+            <video controls src="plantilla10_video_jp.mp4"></video>
+        </div>
+        <div class="media-wrapper">
+            <img src="plantilla10_jp.png" alt="Plantilla 10">
+        </div>
+    </div>
+
+    <!-- Enlaces a otros idiomas -->
+    <div class="lang-select-container">
+        <a href="https://palabrasyfrasesperdidas-dotcom.github.io/palabras-es/">🇪🇸 Español</a>
+        <a href="https://palabrasyfrasesperdidas-dotcom.github.io/palabras-en/">🇬🇧 English</a>
+    </div>
+
 </body>
 </html>
