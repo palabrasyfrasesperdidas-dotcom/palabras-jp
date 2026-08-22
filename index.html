@@ -20,38 +20,38 @@
             justify-content: flex-start;
             align-items: center;
             min-height: 100vh;
-            padding: 15px 20px;
+            padding: 10px 15px;
             text-align: center;
         }
         h1 {
-            font-size: 1.9rem;
+            font-size: 1.6rem;
             margin-bottom: 2px;
             color: #e0e0e0;
         }
         p.subtitle {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             color: #888888;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
-        /* Barra de navegación compacta */
+        /* Barra de navegación ultracompacta */
         .nav-bar {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             justify-content: center;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             flex-wrap: wrap;
             width: 100%;
-            max-width: 750px;
+            max-width: 700px;
         }
         .nav-bar a, .nav-bar select, .nav-bar button {
-            padding: 8px 14px;
-            font-size: 0.85rem;
+            padding: 6px 12px;
+            font-size: 0.8rem;
             font-weight: 600;
             background-color: #1f1f1f;
             border: 1px solid #444;
             color: #fff;
-            border-radius: 6px;
+            border-radius: 5px;
             text-decoration: none;
             transition: all 0.3s ease;
             cursor: pointer;
@@ -60,17 +60,17 @@
         .nav-bar a:hover, .nav-bar button:hover {
             background-color: #333;
             border-color: #777;
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
         .nav-bar select {
             appearance: none;
             -webkit-appearance: none;
             -moz-appearance: none;
-            padding-right: 30px;
+            padding-right: 25px;
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 14px;
+            background-position: right 8px center;
+            background-size: 12px;
         }
         .nav-bar select option {
             background-color: #1f1f1f;
@@ -78,42 +78,42 @@
         }
         .section-container {
             width: 100%;
-            max-width: 620px;
-            margin-bottom: 20px;
+            max-width: 520px;
+            margin-bottom: 10px;
         }
         h2 {
-            font-size: 1.2rem;
-            margin: 0 0 10px 0;
+            font-size: 1.05rem;
+            margin: 0 0 6px 0;
             color: #cccccc;
         }
         .media-wrapper {
             position: relative;
             width: 100%;
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.85);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.85);
             background: #000;
-            margin-bottom: 12px;
         }
         .media-wrapper video,
         .media-wrapper img {
             width: 100%;
             height: auto;
+            max-height: 52vh;
             display: block;
-            object-fit: cover;
+            object-fit: contain;
         }
-        /* Contenedor de frases superpuestas sobre el vídeo */
+        /* Frases superpuestas elegantes */
         .frases-overlay {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
+            bottom: 12px;
+            left: 12px;
+            right: 12px;
             background: rgba(0, 0, 0, 0.75);
-            padding: 12px 18px;
-            border-radius: 6px;
+            padding: 8px 12px;
+            border-radius: 5px;
             backdrop-filter: blur(4px);
             z-index: 10;
-            max-height: 150px;
+            max-height: 120px;
             overflow-y: auto;
             text-align: left;
         }
@@ -123,10 +123,10 @@
             margin: 0;
         }
         .frases-overlay li {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #f1f1f1;
-            line-height: 1.4;
-            margin-bottom: 6px;
+            line-height: 1.3;
+            margin-bottom: 4px;
         }
         .frases-overlay li:last-child {
             margin-bottom: 0;
@@ -138,7 +138,7 @@
     <h1>言葉と失われたフレーズ</h1>
     <p class="subtitle">足跡と考察のコレクション</p>
 
-    <!-- Barra de navegación con Home, Desplegable, Anterior, Siguiente y Aleatoria -->
+    <!-- Barra de navegación -->
     <div class="nav-bar">
         <a href="https://palabrasyfrasesperdidas-dotcom.github.io/palabrasyfrasesperdidas/">🏠 Home</a>
         <select id="blockSelect" onchange="changeBlock(this.value)">
@@ -150,7 +150,7 @@
     </div>
 
     <div class="section-container" id="contentContainer">
-        <!-- El contenido dinámico único se cargará aquí -->
+        <!-- Contenido dinámico -->
     </div>
 
     <script>
@@ -225,14 +225,19 @@
             container.innerHTML = `
                 <h2>${blockTitlesJP[currentBlockId]}</h2>
                 <div class="media-wrapper">
-                    <video controls autoplay loop muted src="plantilla${currentBlockId}_video_jp.mp4"></video>
+                    <video id="blockVideo" controls autoplay loop muted src="plantilla${currentBlockId}_video_jp.mp4" onerror="handleVideoError()"></video>
+                    <img id="blockImg" src="plantilla${currentBlockId}_jp.png" alt="Plantilla ${currentBlockId}" style="display:none;">
                     ${frasesHtml}
-                </div>
-                <div class="media-wrapper">
-                    <img src="plantilla${currentBlockId}_jp.png" alt="Plantilla ${currentBlockId}">
                 </div>
             `;
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function handleVideoError() {
+            const video = document.getElementById('blockVideo');
+            const img = document.getElementById('blockImg');
+            if (video) video.style.display = 'none';
+            if (img) img.style.display = 'block';
         }
 
         function changeBlock(val) {
