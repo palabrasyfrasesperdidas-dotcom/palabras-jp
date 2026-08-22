@@ -102,34 +102,27 @@
             display: block;
             object-fit: contain;
         }
-        /* Frases superpuestas elegantes */
-        .frases-overlay {
+        /* Frase individual superpuesta estilo subtítulo */
+        .frase-overlay {
             position: absolute;
-            bottom: 12px;
-            left: 12px;
-            right: 12px;
-            background: rgba(0, 0, 0, 0.75);
-            padding: 8px 12px;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.65);
+            padding: 10px 15px;
             border-radius: 5px;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(3px);
             z-index: 10;
-            max-height: 120px;
-            overflow-y: auto;
-            text-align: left;
-        }
-        .frases-overlay ul {
-            list-style-type: none;
-            padding-left: 0;
-            margin: 0;
-        }
-        .frases-overlay li {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: #f1f1f1;
-            line-height: 1.3;
-            margin-bottom: 4px;
+            line-height: 1.4;
+            text-align: center;
         }
-        .frases-overlay li:last-child {
-            margin-bottom: 0;
+        /* Contador inferior de frases */
+        .phrase-counter {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 6px;
         }
     </style>
 </head>
@@ -156,6 +149,7 @@
     <script>
         let bloquesData = {};
         let currentBlockId = 1;
+        let currentPhraseIndex = 0;
         const totalBlocks = 18;
 
         const blockTitlesJP = {
@@ -206,20 +200,21 @@
 
         function displayBlock(id) {
             currentBlockId = parseInt(id);
+            currentPhraseIndex = 0; // Reiniciar a la primera frase del bloque
             document.getElementById('blockSelect').value = currentBlockId;
-            
+            renderContent();
+        }
+
+        function renderContent() {
             const container = document.getElementById('contentContainer');
             const frases = bloquesData[currentBlockId] || [];
+            const currentPhrase = frases.length > 0 ? frases[currentPhraseIndex] : "";
             
-            let frasesHtml = '';
+            let fraseHtml = '';
+            let counterHtml = '';
             if (frases.length > 0) {
-                frasesHtml = `
-                    <div class="frases-overlay">
-                        <ul>
-                            ${frases.map(f => `<li>${f}</li>`).join('')}
-                        </ul>
-                    </div>
-                `;
+                fraseHtml = `<div class="frase-overlay">${currentPhrase}</div>`;
+                counterHtml = `<div class="phrase-counter">足跡 ${currentPhraseIndex + 1} / ${frases.length}</div>`;
             }
 
             container.innerHTML = `
@@ -227,8 +222,9 @@
                 <div class="media-wrapper">
                     <video id="blockVideo" controls autoplay loop muted src="plantilla${currentBlockId}_video_jp.mp4" onerror="handleVideoError()"></video>
                     <img id="blockImg" src="plantilla${currentBlockId}_jp.png" alt="Plantilla ${currentBlockId}" style="display:none;">
-                    ${frasesHtml}
+                    ${fraseHtml}
                 </div>
+                ${counterHtml}
             `;
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
