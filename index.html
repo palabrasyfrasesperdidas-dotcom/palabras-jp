@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>言葉と失われたフレーズ | Palabras y frases perdidas</title>
+    <title>言葉と失われたフレーズ</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -17,246 +17,419 @@
             font-family: 'Montserrat', sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
             align-items: center;
             min-height: 100vh;
-            padding: 10px 15px;
+            padding: 20px;
+        }
+        header {
             text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 900px;
         }
         h1 {
-            font-size: 1.6rem;
-            margin-bottom: 2px;
+            font-size: 2rem;
+            margin-bottom: 5px;
             color: #e0e0e0;
         }
         p.subtitle {
-            font-size: 0.85rem;
+            font-size: 1rem;
             color: #888888;
-            margin-bottom: 8px;
         }
-        /* Barra de navegación ultracompacta */
-        .nav-bar {
+        .viewer-section {
             display: flex;
-            gap: 6px;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
             width: 100%;
-            max-width: 700px;
+            max-width: 900px;
+            flex-direction: column;
+            align-items: center;
         }
-        .nav-bar a, .nav-bar select, .nav-bar button {
-            padding: 6px 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            background-color: #1f1f1f;
-            border: 1px solid #444;
-            color: #fff;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: all 0.3s ease;
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        select, button {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            border: 1px solid #333333;
+            padding: 10px 16px;
+            font-size: 0.95rem;
+            border-radius: 6px;
             cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+            touch-action: manipulation;
             font-family: 'Montserrat', sans-serif;
         }
-        .nav-bar a:hover, .nav-bar button:hover {
-            background-color: #333;
-            border-color: #777;
-            transform: translateY(-1px);
+        select:hover, button:hover:not(:disabled) {
+            background-color: #2a2a2a;
+            border-color: #555555;
         }
-        .nav-bar select {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            padding-right: 25px;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 8px center;
-            background-size: 12px;
+        button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
         }
-        .nav-bar select option {
-            background-color: #1f1f1f;
-            color: #fff;
-        }
-        .section-container {
-            width: 100%;
-            max-width: 520px;
-            margin-bottom: 10px;
-        }
-        h2 {
-            font-size: 1.05rem;
-            margin: 0 0 6px 0;
-            color: #cccccc;
-        }
-        .media-wrapper {
+        .canvas-container {
             position: relative;
             width: 100%;
-            border-radius: 6px;
+            max-width: 480px;
+            background-color: #000000;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.85);
-            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
         }
-        .media-wrapper video,
-        .media-wrapper img {
+        canvas {
             width: 100%;
             height: auto;
-            max-height: 52vh;
             display: block;
-            object-fit: contain;
         }
-        /* Frase individual superpuesta estilo subtítulo */
-        .frase-overlay {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.65);
-            padding: 10px 15px;
-            border-radius: 5px;
-            backdrop-filter: blur(3px);
-            z-index: 10;
+        .info-panel {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 480px;
             font-size: 0.9rem;
-            color: #f1f1f1;
-            line-height: 1.4;
-            text-align: center;
+            color: #aaaaaa;
         }
-        /* Contador inferior de frases */
-        .phrase-counter {
-            font-size: 0.8rem;
-            color: #888;
-            margin-top: 6px;
+        #loading {
+            position: absolute;
+            color: #ffffff;
+            font-size: 1.1rem;
+            background: rgba(0,0,0,0.7);
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: none;
+            z-index: 10;
         }
     </style>
 </head>
 <body>
 
-    <h1>言葉と失われたフレーズ</h1>
-    <p class="subtitle">足跡と考察のコレクション</p>
+    <header>
+        <h1>言葉と失われたフレーズ</h1>
+        <p class="subtitle">足跡と考察のコレクション</p>
+    </header>
 
-    <!-- Barra de navegación -->
-    <div class="nav-bar">
-        <a href="https://palabrasyfrasesperdidas-dotcom.github.io/palabrasyfrasesperdidas/">🏠 Home</a>
-        <select id="blockSelect" onchange="changeBlock(this.value)">
-            <!-- Se rellenará dinámicamente -->
-        </select>
-        <button onclick="prevBlock()">← 戻る</button>
-        <button onclick="nextBlock()">次へ →</button>
-        <button onclick="randomBlock()">🎲 ランダム</button>
+    <div class="viewer-section">
+        <div class="controls">
+            <button id="homeBtn">🏠 Home</button>
+            <select id="blockSelect"></select>
+            <button id="prevBtn">&larr; 戻る</button>
+            <button id="nextBtn">次へ &rarr;</button>
+            <button id="randomBtn">🎲 ランダム</button>
+        </div>
+
+        <div class="canvas-container">
+            <div id="loading">読み込み中...</div>
+            <canvas id="cardCanvas"></canvas>
+        </div>
+
+        <div class="info-panel">
+            <span id="huellaCounter">--</span>
+        </div>
     </div>
 
-    <div class="section-container" id="contentContainer">
-        <!-- Contenido dinámico -->
-    </div>
+<script>
+    // Estrictamente 18 bloques en japonés
+    const blockNamesJP = [
+        "第1ブロック：運命の幾何学",
+        "第2ブロック：魂の建築",
+        "第3ブロック：沈黙の解剖学",
+        "第4ブロック：恐れとその影",
+        "第5ブロック：世界のまなざし",
+        "第6ブロック：愚者たちのざわめき",
+        "第7ブロック：星々の天蓋",
+        "第8ブロック：心の倫理",
+        "第9ブロック：息づく時間",
+        "第10ブロック：生きることの遊戯",
+        "第11ブロック：自由の鼓動",
+        "第12ブロック：思考の解剖学",
+        "第13ブロック：言葉の宇宙",
+        "第14ブロック：語りかける孤独",
+        "第15ブロック：記憶の回廊",
+        "第16ブロック：希望の地平",
+        "第17ブロック：影の王国",
+        "第18ブロック：永遠の足跡"
+    ];
 
-    <script>
-        let bloquesData = {};
-        let currentBlockId = 1;
-        let currentPhraseIndex = 0;
-        const totalBlocks = 18;
+    let allFrases = [];
+    let currentFilteredFrases = [];
+    let currentIndex = parseInt(sessionStorage.getItem('pyfp_jp_index') || '0', 10);
+    let animationFrameId = null;
+    let currentVideoElem = null;
 
-        const blockTitlesJP = {
-            1: "第1ブロック：運命の幾何学",
-            2: "第2ブロック：魂の建築",
-            3: "第3ブロック：沈黙の解剖学",
-            4: "第4ブロック：恐れとその影",
-            5: "第5ブロック：世界のまなざし",
-            6: "第6ブロック：愚者たちのざわめき",
-            7: "第7ブロック：星々の天蓋",
-            8: "第8ブロック：心の倫理",
-            9: "第9ブロック：息づく時間",
-            10: "第10ブロック：生きることの遊戯",
-            11: "第11ブロック：自由の鼓動",
-            12: "第12ブロック：思考の解剖学",
-            13: "第13ブロック：言葉の宇宙",
-            14: "第14ブロック：語りかける孤独",
-            15: "第15ブロック：記憶の回廊",
-            16: "第16ブロック：希望の地平",
-            17: "第17ブロック：影の王国",
-            18: "第18ブロック：永遠の足跡"
+    let canvas, ctx, blockSelect, prevBtn, nextBtn, randomBtn, homeBtn, huellaCounter, loadingElem;
+
+    function populateSelect() {
+        if (!blockSelect) return;
+        const currentVal = sessionStorage.getItem('pyfp_jp_block') || "1";
+        blockSelect.innerHTML = "";
+        blockNamesJP.forEach((name, index) => {
+            const opt = document.createElement('option');
+            opt.value = (index + 1).toString();
+            opt.textContent = name;
+            if ((index + 1).toString() === currentVal) {
+                opt.selected = true;
+            }
+            blockSelect.appendChild(opt);
+        });
+    }
+
+    async function loadData() {
+        if (loadingElem) {
+            loadingElem.style.display = 'block';
+            loadingElem.textContent = "読み込み中...";
+        }
+        try {
+            const response = await fetch('frases.json?t=' + Date.now());
+            if (!response.ok) throw new Error("HTTPエラー " + response.status);
+            allFrases = await response.json();
+            if (loadingElem) loadingElem.style.display = 'none';
+
+            let activeBlock = sessionStorage.getItem('pyfp_jp_block') || "1";
+            if (blockSelect) blockSelect.value = activeBlock;
+
+            filterByBlock(parseInt(activeBlock, 10), true);
+        } catch (error) {
+            console.error("データの読み込みエラー:", error);
+            if (loadingElem) {
+                loadingElem.style.display = 'block';
+                loadingElem.textContent = "frases.json の読み込みに失敗しました";
+            }
+        }
+    }
+
+    function filterByBlock(blockNum, keepIndex = false) {
+        sessionStorage.setItem('pyfp_jp_block', blockNum.toString());
+        currentFilteredFrases = allFrases.filter(f => Number(f.bloque || f.block) === Number(blockNum));
+        
+        if (!keepIndex) {
+            currentIndex = 0;
+        } else {
+            const savedIndex = parseInt(sessionStorage.getItem('pyfp_jp_index') || '0', 10);
+            currentIndex = (savedIndex < currentFilteredFrases.length) ? savedIndex : 0;
+        }
+
+        if (currentFilteredFrases.length === 0) {
+            stopAnimation();
+            if (huellaCounter) huellaCounter.textContent = "このブロックに足跡はありません";
+            if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height);
+            return;
+        }
+
+        renderCurrentHuella();
+    }
+
+    function stopAnimation() {
+        if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+        }
+        if (currentVideoElem) {
+            currentVideoElem.pause();
+            currentVideoElem.removeAttribute('src');
+            currentVideoElem.load();
+            currentVideoElem = null;
+        }
+    }
+
+    function renderCurrentHuella() {
+        if (currentFilteredFrases.length === 0) return;
+
+        stopAnimation();
+        sessionStorage.setItem('pyfp_jp_index', currentIndex.toString());
+
+        const item = currentFilteredFrases[currentIndex];
+        const currentBlockNum = Number(item.bloque || item.block);
+
+        if (huellaCounter) {
+            huellaCounter.textContent = `足跡 ${item.id} (${currentIndex + 1} / ${currentFilteredFrases.length})`;
+        }
+        if (prevBtn) prevBtn.disabled = currentIndex === 0;
+        if (nextBtn) nextBtn.disabled = currentIndex === currentFilteredFrases.length - 1;
+
+        const imgPath = `plantilla${currentBlockNum}_jp.png`;
+        const videoPath = `plantilla${currentBlockNum}_video_jp.mp4`;
+
+        const bgImg = new Image();
+        bgImg.src = imgPath;
+
+        bgImg.onload = () => {
+            adjustCanvasSize(bgImg.naturalWidth, bgImg.naturalHeight);
+            drawCanvasFrame(bgImg, item.texto);
+            tryLoadVideo(videoPath, item.texto, bgImg);
         };
 
-        fetch('frases.json')
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(item => {
-                    if (!bloquesData[item.bloque]) {
-                        bloquesData[item.bloque] = [];
+        bgImg.onerror = () => {
+            drawTextOnly(item.texto);
+        };
+    }
+
+    function adjustCanvasSize(width, height) {
+        if (!canvas) return;
+        canvas.width = width || 1080;
+        canvas.height = height || 1350;
+    }
+
+    function tryLoadVideo(videoSrc, text, fallbackImg) {
+        const video = document.createElement('video');
+        video.src = videoSrc;
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+
+        video.onloadeddata = () => {
+            currentVideoElem = video;
+            if (video.videoWidth && video.videoHeight) {
+                adjustCanvasSize(video.videoWidth, video.videoHeight);
+            }
+            video.play().then(() => {
+                function loop() {
+                    if (currentVideoElem === video && ctx && canvas) {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        drawTextOverlay(text);
+                        animationFrameId = requestAnimationFrame(loop);
                     }
-                    bloquesData[item.bloque].push(item.texto);
-                });
-                initSelect();
-                displayBlock(currentBlockId);
-            })
-            .catch(error => console.error('Error al cargar frases.json:', error));
+                }
+                loop();
+            }).catch(() => {
+                drawCanvasFrame(fallbackImg, text);
+            });
+        };
 
-        function initSelect() {
-            const select = document.getElementById('blockSelect');
-            select.innerHTML = '';
-            for (let i = 1; i <= totalBlocks; i++) {
-                let option = document.createElement('option');
-                option.value = i;
-                option.textContent = blockTitlesJP[i] || `第${i}ブロック`;
-                select.appendChild(option);
+        video.onerror = () => {
+            drawCanvasFrame(fallbackImg, text);
+        };
+    }
+
+    function drawCanvasFrame(bgImg, text) {
+        if (!ctx || !canvas) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+        drawTextOverlay(text);
+    }
+
+    function drawTextOnly(text) {
+        if (!ctx || !canvas) return;
+        adjustCanvasSize(1080, 1350);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawTextOverlay(text);
+    }
+
+    function drawTextOverlay(text) {
+        if (!ctx || !canvas || !text) return;
+        ctx.fillStyle = "#ffffff";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        const maxWidth = canvas.width * 0.8;
+        const lineHeight = canvas.height * 0.052;
+        const x = canvas.width / 2;
+        const y = canvas.height * 0.46;
+
+        let fontSize = Math.round(canvas.width * 0.038);
+        if (text.length > 150) fontSize = Math.round(canvas.width * 0.032);
+        if (text.length > 250) fontSize = Math.round(canvas.width * 0.027);
+
+        ctx.font = `400 ${fontSize}px 'Montserrat', sans-serif`;
+
+        const words = text.split(' ');
+        let lines = [];
+        let currentLine = words[0];
+
+        for (let i = 1; i < words.length; i++) {
+            let word = words[i];
+            let width = ctx.measureText(currentLine + " " + word).width;
+            if (width < maxWidth) {
+                currentLine += " " + word;
+            } else {
+                lines.push(currentLine);
+                currentLine = word;
             }
         }
+        lines.push(currentLine);
 
-        function displayBlock(id) {
-            currentBlockId = parseInt(id);
-            currentPhraseIndex = 0; // Reiniciar a la primera frase del bloque
-            document.getElementById('blockSelect').value = currentBlockId;
-            renderContent();
+        const totalHeight = lines.length * lineHeight;
+        let startY = y - (totalHeight / 2) + (lineHeight / 2);
+
+        lines.forEach((line, index) => {
+            ctx.fillText(line, x, startY + (index * lineHeight));
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        canvas = document.getElementById('cardCanvas');
+        ctx = canvas ? canvas.getContext('2d') : null;
+        blockSelect = document.getElementById('blockSelect');
+        prevBtn = document.getElementById('prevBtn');
+        nextBtn = document.getElementById('nextBtn');
+        randomBtn = document.getElementById('randomBtn');
+        homeBtn = document.getElementById('homeBtn');
+        huellaCounter = document.getElementById('huellaCounter');
+        loadingElem = document.getElementById('loading');
+
+        populateSelect();
+
+        if (homeBtn) {
+            homeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.href = "https://palabrasyfrasesperdidas-dotcom.github.io/palabrasyfrasesperdidas/";
+            });
         }
 
-        function renderContent() {
-            const container = document.getElementById('contentContainer');
-            const frases = bloquesData[currentBlockId] || [];
-            const currentPhrase = frases.length > 0 ? frases[currentPhraseIndex] : "";
-            
-            let fraseHtml = '';
-            let counterHtml = '';
-            if (frases.length > 0) {
-                fraseHtml = `<div class="frase-overlay">${currentPhrase}</div>`;
-                counterHtml = `<div class="phrase-counter">足跡 ${currentPhraseIndex + 1} / ${frases.length}</div>`;
-            }
-
-            container.innerHTML = `
-                <h2>${blockTitlesJP[currentBlockId]}</h2>
-                <div class="media-wrapper">
-                    <video id="blockVideo" controls autoplay loop muted src="plantilla${currentBlockId}_video_jp.mp4" onerror="handleVideoError()"></video>
-                    <img id="blockImg" src="plantilla${currentBlockId}_jp.png" alt="Plantilla ${currentBlockId}" style="display:none;">
-                    ${fraseHtml}
-                </div>
-                ${counterHtml}
-            `;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (blockSelect) {
+            blockSelect.addEventListener('change', (e) => {
+                filterByBlock(parseInt(e.target.value, 10), false);
+            });
         }
 
-        function handleVideoError() {
-            const video = document.getElementById('blockVideo');
-            const img = document.getElementById('blockImg');
-            if (video) video.style.display = 'none';
-            if (img) img.style.display = 'block';
+        if (prevBtn) {
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    renderCurrentHuella();
+                }
+            });
         }
 
-        function changeBlock(val) {
-            displayBlock(val);
+        if (nextBtn) {
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentIndex < currentFilteredFrases.length - 1) {
+                    currentIndex++;
+                    renderCurrentHuella();
+                }
+            });
         }
 
-        function nextBlock() {
-            currentBlockId = currentBlockId < totalBlocks ? currentBlockId + 1 : 1;
-            displayBlock(currentBlockId);
+        if (randomBtn) {
+            randomBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (allFrases.length === 0) return;
+                const randomIndex = Math.floor(Math.random() * allFrases.length);
+                const randomItem = allFrases[randomIndex];
+                const blockValue = Number(randomItem.bloque || randomItem.block);
+                
+                blockSelect.value = blockValue.toString();
+                currentFilteredFrases = allFrases.filter(f => Number(f.bloque || f.block) === blockValue);
+                currentIndex = currentFilteredFrases.findIndex(f => f.id === randomItem.id);
+                if (currentIndex === -1) currentIndex = 0;
+                renderCurrentHuella();
+            });
         }
 
-        function prevBlock() {
-            currentBlockId = currentBlockId > 1 ? currentBlockId - 1 : totalBlocks;
-            displayBlock(currentBlockId);
-        }
-
-        function randomBlock() {
-            let randomId;
-            do {
-                randomId = Math.floor(Math.random() * totalBlocks) + 1;
-            } while (randomId === currentBlockId && totalBlocks > 1);
-            displayBlock(randomId);
-        }
-    </script>
+        loadData();
+    });
+</script>
 </body>
 </html>
