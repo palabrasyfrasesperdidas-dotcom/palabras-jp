@@ -28,20 +28,63 @@
             margin-bottom: 5px;
             color: #e0e0e0;
         }
-        h2 {
-            font-size: 1.5rem;
-            margin: 30px 0 15px 0;
-            color: #cccccc;
-        }
         p.subtitle {
             font-size: 1.15rem;
             color: #888888;
             margin-bottom: 25px;
         }
+        /* Barra de navegación superior */
+        .nav-bar {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 800px;
+        }
+        .nav-bar a, .nav-bar select, .nav-bar button {
+            padding: 10px 18px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            background-color: #1f1f1f;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .nav-bar a:hover, .nav-bar button:hover {
+            background-color: #333;
+            border-color: #777;
+            transform: translateY(-2px);
+        }
+        .nav-bar select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding-right: 35px;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
+        .nav-bar select option {
+            background-color: #1f1f1f;
+            color: #fff;
+        }
         .section-container {
             width: 100%;
             max-width: 760px;
             margin-bottom: 40px;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin: 0 0 20px 0;
+            color: #cccccc;
         }
         .media-wrapper {
             width: 100%;
@@ -49,7 +92,7 @@
             overflow: hidden;
             box-shadow: 0 12px 35px rgba(0,0,0,0.85);
             background: #000;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         .media-wrapper video,
         .media-wrapper img {
@@ -58,151 +101,158 @@
             display: block;
             object-fit: cover;
         }
-        .lang-select-container {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
+        .frases-box {
+            background-color: #161616;
+            border: 1px solid #2a2a2a;
+            border-radius: 10px;
+            padding: 20px;
             margin-top: 20px;
-            flex-wrap: wrap;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
         }
-        .lang-select-container a {
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            background-color: #1f1f1f;
-            border: 1px solid #444;
-            color: #fff;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: all 0.3s ease;
+        .frases-box ul {
+            list-style-type: none;
+            padding-left: 0;
         }
-        .lang-select-container a:hover {
-            background-color: #333;
-            border-color: #777;
-            transform: translateY(-2px);
+        .frases-box li {
+            margin-bottom: 12px;
+            font-size: 1rem;
+            color: #d1d1d1;
+            line-height: 1.5;
+            border-bottom: 1px solid #222;
+            padding-bottom: 8px;
+        }
+        .frases-box li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
     </style>
 </head>
 <body>
 
     <h1>言葉と失われたフレーズ</h1>
-    <p class="subtitle">足跡と考察のコレクション (Colección de huellas y reflexiones)</p>
+    <p class="subtitle">足跡と考察のコレクション</p>
 
-    <!-- Bloque 1: 運命の幾何学 -->
-    <div class="section-container">
-        <h2>運命の幾何学</h2>
-        <div class="media-wrapper">
-            <video controls src="plantilla1_video_jp.mp4"></video>
-        </div>
-        <div class="media-wrapper">
-            <img src="plantilla1_jp.png" alt="運命の幾何学 - Plantilla 1">
-        </div>
+    <!-- Barra de navegación con Home, Desplegable, Anterior, Siguiente y Aleatoria -->
+    <div class="nav-bar">
+        <a href="https://palabrasyfrasesperdidas-dotcom.github.io/palabrasyfrasesperdidas/">🏠 Home</a>
+        <select id="blockSelect" onchange="changeBlock(this.value)">
+            <!-- Se rellenará dinámicamente o por defecto -->
+        </select>
+        <button onclick="prevBlock()">← 戻る</button>
+        <button onclick="nextBlock()">次へ →</button>
+        <button onclick="randomBlock()">🎲 ランダム</button>
     </div>
 
-    <!-- Bloque 2: 魂の建築 -->
-    <div class="section-container">
-        <h2>魂の建築</h2>
-        <div class="media-wrapper">
-            <video controls src="plantilla2_video_jp.mp4"></video>
-        </div>
-        <div class="media-wrapper">
-            <img src="plantilla2_jp.png" alt="魂の建築 - Plantilla 2">
-        </div>
+    <div class="section-container" id="contentContainer">
+        <!-- El contenido dinámico se cargará aquí -->
     </div>
 
-    <!-- Bloque 3: 沈黙の解剖学 -->
-    <div class="section-container">
-        <h2>沈黙の解剖学</h2>
-        <div class="media-wrapper">
-            <video controls src="plantilla3_video_jp.mp4"></video>
-        </div>
-        <div class="media-wrapper">
-            <img src="plantilla3_jp.png" alt="沈黙の解剖学 - Plantilla 3">
-        </div>
-    </div>
+    <script>
+        let bloquesData = {};
+        let currentBlockId = 1;
+        const totalBlocks = 18;
 
-    <!-- Bloque 4: 恐れとその影 -->
-    <div class="section-container">
-        <h2>恐れとその影</h2>
-        <div class="media-wrapper">
-            <video controls src="plantilla4_video_jp.mp4"></video>
-        </div>
-        <div class="media-wrapper">
-            <img src="plantilla4_jp.png" alt="恐れとその影 - Plantilla 4">
-        </div>
-    </div>
+        const blockTitlesJP = {
+            1: "第1ブロック：運命の幾何学",
+            2: "第2ブロック：魂の建築",
+            3: "第3ブロック：沈黙の解剖学",
+            4: "第4ブロック：恐れとその影",
+            5: "第5ブロック：世界のまなざし",
+            6: "第6ブロック：愚者たちのざわめき",
+            7: "第7ブロック：星々の天蓋",
+            8: "第8ブロック：心の倫理",
+            9: "第9ブロック：息づく時間",
+            10: "第10ブロック：生きることの遊戯",
+            11: "第11ブロック：自由の鼓動",
+            12: "第12ブロック：思考の解剖学",
+            13: "第13ブロック：言葉の宇宙",
+            14: "第14ブロック：語りかける孤独",
+            15: "第15ブロック：記憶の回廊",
+            16: "第16ブロック：希望の地平",
+            17: "第17ブロック：影の王国",
+            18: "第18ブロック：永遠の足跡"
+        };
 
-    <!-- Plantilla 5 -->
-    <div class="section-container">
-        <h2>Plantilla 5</h2>
-        <div class="media-wrapper">
-            <video controls src="plantilla5_video_jp.mp4"></video>
-        </div>
-        <div class="media-wrapper">
-            <img src="plantilla5_jp.png" alt="Plantilla 5">
-        </div>
-    </div>
+        fetch('frases.json')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(item => {
+                    if (!bloquesData[item.bloque]) {
+                        bloquesData[item.bloque] = [];
+                    }
+                    bloquesData[item.bloque].push(item.texto);
+                });
+                initSelect();
+                displayBlock(currentBlockId);
+            })
+            .catch(error => console.error('Error al cargar frases.json:', error));
 
-    <!-- Plantilla 6 -->
-    <div class="section-container">
-        <h2>Plantilla 6</h2>
-        <div class="media-wrapper">
-            <video controls src="plantilla6_video_jp.mp4"></video>
-        </div>
-        <div class="media-wrapper">
-            <img src="plantilla6_jp.png" alt="Plantilla 6">
-        </div>
-    </div>
+        function initSelect() {
+            const select = document.getElementById('blockSelect');
+            select.innerHTML = '';
+            for (let i = 1; i <= totalBlocks; i++) {
+                let option = document.createElement('option');
+                option.value = i;
+                option.textContent = blockTitlesJP[i] || `第${i}ブロック`;
+                select.appendChild(option);
+            }
+        }
 
-    <!-- Plantilla 7 -->
-    <div class="section-container">
-        <h2>Plantilla 7</h2>
-        <div class="media-wrapper">
-            <video controls src="plantilla7_video_jp.mp4"></video>
-        </div>
-        <div class="media-wrapper">
-            <img src="plantilla7_jp.png" alt="Plantilla 7">
-        </div>
-    </div>
+        function displayBlock(id) {
+            currentBlockId = parseInt(id);
+            document.getElementById('blockSelect').value = currentBlockId;
+            
+            const container = document.getElementById('contentContainer');
+            const frases = bloquesData[currentBlockId] || [];
+            
+            let frasesHtml = '';
+            if (frases.length > 0) {
+                frasesHtml = `
+                    <div class="frases-box">
+                        <ul>
+                            ${frases.map(f => `<li>${f}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
 
-    <!-- Plantilla 8 -->
-    <div class="section-container">
-        <h2>Plantilla 8</h2>
-        <div class="media-wrapper">
-            <video controls src="plantilla8_video_jp.mp4"></video>
-        </div>
-        <div class="media-wrapper">
-            <img src="plantilla8_jp.png" alt="Plantilla 8">
-        </div>
-    </div>
+            container.innerHTML = `
+                <h2>${blockTitlesJP[currentBlockId]}</h2>
+                <div class="media-wrapper">
+                    <video controls autoplay loop muted src="plantilla${currentBlockId}_video_jp.mp4"></video>
+                </div>
+                <div class="media-wrapper">
+                    <img src="plantilla${currentBlockId}_jp.png" alt="Plantilla ${currentBlockId}">
+                </div>
+                ${frasesHtml}
+            `;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-    <!-- Plantilla 9 -->
-    <div class="section-container">
-        <h2>Plantilla 9</h2>
-        <div class="media-wrapper">
-            <video controls src="plantilla9_video_jp.mp4"></video>
-        </div>
-        <div class="media-wrapper">
-            <img src="plantilla9_jp.png" alt="Plantilla 9">
-        </div>
-    </div>
+        function changeBlock(val) {
+            displayBlock(val);
+        }
 
-    <!-- Plantilla 10 -->
-    <div class="section-container">
-        <h2>Plantilla 10</h2>
-        <div class="media-wrapper">
-            <video controls src="plantilla10_video_jp.mp4"></video>
-        </div>
-        <div class="media-wrapper">
-            <img src="plantilla10_jp.png" alt="Plantilla 10">
-        </div>
-    </div>
+        function nextBlock() {
+            currentBlockId = currentBlockId < totalBlocks ? currentBlockId + 1 : 1;
+            displayBlock(currentBlockId);
+        }
 
-    <!-- Enlaces a otros idiomas -->
-    <div class="lang-select-container">
-        <a href="https://palabrasyfrasesperdidas-dotcom.github.io/palabras-es/">🇪🇸 Español</a>
-        <a href="https://palabrasyfrasesperdidas-dotcom.github.io/palabras-en/">🇬🇧 English</a>
-    </div>
+        function prevBlock() {
+            currentBlockId = currentBlockId > 1 ? currentBlockId - 1 : totalBlocks;
+            displayBlock(currentBlockId);
+        }
 
+        function randomBlock() {
+            let randomId;
+            do {
+                randomId = Math.floor(Math.random() * totalBlocks) + 1;
+            } while (randomId === currentBlockId && totalBlocks > 1);
+            displayBlock(randomId);
+        }
+    </script>
 </body>
 </html>
