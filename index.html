@@ -283,7 +283,11 @@
         video.src = videoSrc;
         video.muted = true;
         video.loop = true;
+        video.autoplay = true;
         video.playsInline = true;
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+        video.setAttribute('muted', '');
 
         video.onloadeddata = () => {
             currentVideoElem = video;
@@ -301,6 +305,7 @@
                 }
                 loop();
             }).catch(() => {
+                // Si el navegador móvil bloquea el autoplay, se queda con la imagen estática de respaldo
                 drawCanvasFrame(fallbackImg, text);
             });
         };
@@ -308,6 +313,8 @@
         video.onerror = () => {
             drawCanvasFrame(fallbackImg, text);
         };
+        
+        video.load();
     }
 
     function drawCanvasFrame(bgImg, text) {
@@ -330,7 +337,7 @@
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
 
-        const maxWidth = canvas.width * 0.75; // Margen optimizado para japonés
+        const maxWidth = canvas.width * 0.75;
         const lineHeight = canvas.height * 0.055;
         const x = canvas.width / 2;
         const y = canvas.height * 0.46;
@@ -341,7 +348,6 @@
 
         ctx.font = `400 ${fontSize}px 'Montserrat', sans-serif`;
 
-        // Ajuste de líneas adaptado para texto en japonés (carácter por carácter)
         let lines = [];
         let currentLine = "";
 
@@ -379,6 +385,13 @@
         loadingElem = document.getElementById('loading');
 
         populateSelect();
+
+        // Desbloqueo táctil para navegadores móviles estrictos
+        document.addEventListener('touchstart', function unlockVideo() {
+            if (currentVideoElem && currentVideoElem.paused) {
+                currentVideoElem.play().catch(() => {});
+            }
+        }, { once: true });
 
         if (homeBtn) {
             homeBtn.addEventListener('click', (e) => {
