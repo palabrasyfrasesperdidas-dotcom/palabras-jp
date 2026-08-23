@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>言葉と失われたフレーズ</title>
+    <title>失われた言葉とフレーズ - 日本語</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -61,7 +61,6 @@
             cursor: pointer;
             transition: background-color 0.2s, border-color 0.2s;
             touch-action: manipulation;
-            font-family: 'Montserrat', sans-serif;
         }
         select:hover, button:hover:not(:disabled) {
             background-color: #2a2a2a;
@@ -114,13 +113,13 @@
 <body>
 
     <header>
-        <h1>言葉と失われたフレーズ</h1>
+        <h1>失われた言葉とフレーズ</h1>
         <p class="subtitle">足跡と考察のコレクション</p>
     </header>
 
     <div class="viewer-section">
         <div class="controls">
-            <button id="homeBtn">🏠 Home</button>
+            <button id="homeBtn">🏠 ホーム</button>
             <select id="blockSelect"></select>
             <button id="prevBtn">&larr; 前へ</button>
             <button id="nextBtn">次へ &rarr;</button>
@@ -138,25 +137,22 @@
     </div>
 
 <script>
+    // Estrictamente 14 bloques en japonés
     const blockNamesJP = [
-        "第1ブロック：運命の幾何学",
-        "第2ブロック：魂の建築",
-        "第3ブロック：沈黙の解剖学",
-        "第4ブロック：恐れとその影",
-        "第5ブロック：世界のまなざし",
-        "第6ブロック：愚者たちのざわめき",
-        "第7ブロック：星々の天蓋",
-        "第8ブロック：心の倫理",
-        "第9ブロック：息づく時間",
-        "第10ブロック：生きることの遊戯",
-        "第11ブロック：自由の鼓動",
-        "第12ブロック：思考の解剖学",
-        "第13ブロック：言葉の宇宙",
-        "第14ブロック：語りかける孤独",
-        "第15ブロック：記憶の回廊",
-        "第16ブロック：希望の地平",
-        "第17ブロック：影の王国",
-        "第18ブロック：永遠の足跡"
+        "1: 運命の幾何学",
+        "2: 魂の建築",
+        "3: 沈黙の解剖学",
+        "4: 恐れとその影",
+        "5: 世界のまなざし",
+        "6: 愚者たちのざわめき",
+        "7: 星々の空",
+        "8: 心の倫理",
+        "9: 呼吸する時間",
+        "10: 生きるという遊び",
+        "11: 自由の鼓動",
+        "12: 思考の解剖学",
+        "13: 言葉の宇宙",
+        "14: 語りかける孤独"
     ];
 
     let allFrases = [];
@@ -189,7 +185,7 @@
         }
         try {
             const response = await fetch('frases.json?t=' + Date.now());
-            if (!response.ok) throw new Error("Error HTTP " + response.status);
+            if (!response.ok) throw new Error("HTTP error " + response.status);
             allFrases = await response.json();
             if (loadingElem) loadingElem.style.display = 'none';
 
@@ -198,10 +194,10 @@
 
             filterByBlock(parseInt(activeBlock, 10), true);
         } catch (error) {
-            console.error("Error al cargar datos:", error);
+            console.error("Error loading data:", error);
             if (loadingElem) {
                 loadingElem.style.display = 'block';
-                loadingElem.textContent = "frases.json の読み込みに失敗しました";
+                loadingElem.textContent = "frases.json の読み込みエラー";
             }
         }
     }
@@ -219,7 +215,7 @@
 
         if (currentFilteredFrases.length === 0) {
             stopAnimation();
-            if (huellaCounter) huellaCounter.textContent = "このブロックに足跡はありません";
+            if (huellaCounter) huellaCounter.textContent = "このブロックにはフレーズがありません";
             if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height);
             return;
         }
@@ -255,6 +251,7 @@
         if (prevBtn) prevBtn.disabled = currentIndex === 0;
         if (nextBtn) nextBtn.disabled = currentIndex === currentFilteredFrases.length - 1;
 
+        // Rutas corregidas con sufijo _jp para coincidir con tu repositorio
         const imgPath = `plantilla${currentBlockNum}_jp.png`;
         const videoPath = `plantilla${currentBlockNum}_video_jp.mp4`;
 
@@ -283,11 +280,7 @@
         video.src = videoSrc;
         video.muted = true;
         video.loop = true;
-        video.autoplay = true;
         video.playsInline = true;
-        video.setAttribute('playsinline', '');
-        video.setAttribute('webkit-playsinline', '');
-        video.setAttribute('muted', '');
 
         video.onloadeddata = () => {
             currentVideoElem = video;
@@ -305,7 +298,6 @@
                 }
                 loop();
             }).catch(() => {
-                // Si el navegador móvil bloquea el autoplay, se queda con la imagen estática de respaldo
                 drawCanvasFrame(fallbackImg, text);
             });
         };
@@ -313,8 +305,6 @@
         video.onerror = () => {
             drawCanvasFrame(fallbackImg, text);
         };
-        
-        video.load();
     }
 
     function drawCanvasFrame(bgImg, text) {
@@ -337,33 +327,34 @@
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
 
-        const maxWidth = canvas.width * 0.75;
-        const lineHeight = canvas.height * 0.055;
+        const maxWidth = canvas.width * 0.8;
+        const lineHeight = canvas.height * 0.052;
         const x = canvas.width / 2;
         const y = canvas.height * 0.46;
 
         let fontSize = Math.round(canvas.width * 0.038);
-        if (text.length > 30) fontSize = Math.round(canvas.width * 0.034);
-        if (text.length > 60) fontSize = Math.round(canvas.width * 0.030);
+        if (text.length > 150) fontSize = Math.round(canvas.width * 0.032);
+        if (text.length > 250) fontSize = Math.round(canvas.width * 0.027);
 
         ctx.font = `400 ${fontSize}px 'Montserrat', sans-serif`;
 
+        // Procesamiento adaptado para texto (gestiona espacios o caracteres de forma fluida)
+        const words = text.includes(' ') ? text.split(' ') : text.split('');
         let lines = [];
-        let currentLine = "";
+        let currentLine = words[0];
 
-        for (let i = 0; i < text.length; i++) {
-            let char = text[i];
-            let testLine = currentLine + char;
-            if (ctx.measureText(testLine).width > maxWidth && currentLine !== "") {
-                lines.push(currentLine);
-                currentLine = char;
-            } else {
+        for (let i = 1; i < words.length; i++) {
+            let word = words[i];
+            let testLine = text.includes(' ') ? currentLine + " " + word : currentLine + word;
+            let width = ctx.measureText(testLine).width;
+            if (width < maxWidth) {
                 currentLine = testLine;
+            } else {
+                lines.push(currentLine);
+                currentLine = word;
             }
         }
-        if (currentLine) {
-            lines.push(currentLine);
-        }
+        lines.push(currentLine);
 
         const totalHeight = lines.length * lineHeight;
         let startY = y - (totalHeight / 2) + (lineHeight / 2);
@@ -385,13 +376,6 @@
         loadingElem = document.getElementById('loading');
 
         populateSelect();
-
-        // Desbloqueo táctil para navegadores móviles estrictos
-        document.addEventListener('touchstart', function unlockVideo() {
-            if (currentVideoElem && currentVideoElem.paused) {
-                currentVideoElem.play().catch(() => {});
-            }
-        }, { once: true });
 
         if (homeBtn) {
             homeBtn.addEventListener('click', (e) => {
