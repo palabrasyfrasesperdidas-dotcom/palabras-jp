@@ -3,7 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>失われた言葉とフレーズ - 日本語</title>
+    
+    <!-- SEO & Essential Metadata - Japanese -->
+    <title>失われた言葉とフレーズ | 日本語コレクション</title>
+    <meta name="description" content="失われた言葉とフレーズの足跡と考察のコレクションを日本語で探索します。独自の文学的デザインによるテーマ別ブロックを閲覧できます。">
+    <meta name="keywords" content="失われた言葉, 失われたフレーズ, 文学, 考察, 文学的カートグラフィー, 日本語">
+    
+    <!-- Open Graph for Social Media -->
+    <meta property="og:title" content="失われた言葉とフレーズ | 日本語コレクション">
+    <meta property="og:description" content="テーマ別ブロックで整理された文学的な足跡と考察のコレクション。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://palabrasyfrasesperdidas-dotcom.github.io/palabras-jp/">
+    
+    <!-- Hreflang Links for Multilingual SEO -->
+    <link rel="alternate" hreflang="es" href="https://palabrasyfrasesperdidas-dotcom.github.io/palabras-es/">
+    <link rel="alternate" hreflang="en" href="https://palabrasyfrasesperdidas-dotcom.github.io/palabras-en/">
+    <link rel="alternate" hreflang="ja" href="https://palabrasyfrasesperdidas-dotcom.github.io/palabras-jp/">
+    <link rel="alternate" hreflang="fr" href="https://palabrasyfrasesperdidas-dotcom.github.io/palabras-fr/">
+    <link rel="alternate" hreflang="de" href="https://palabrasyfrasesperdidas-dotcom.github.io/palabras-al/">
+    <link rel="alternate" hreflang="x-default" href="https://palabrasyfrasesperdidas-dotcom.github.io/palabrasyfrasesperdidas/">
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -251,7 +270,6 @@
         if (prevBtn) prevBtn.disabled = currentIndex === 0;
         if (nextBtn) nextBtn.disabled = currentIndex === currentFilteredFrases.length - 1;
 
-        // Rutas corregidas con sufijo _jp para coincidir con tu repositorio
         const imgPath = `plantilla${currentBlockNum}_jp.png`;
         const videoPath = `plantilla${currentBlockNum}_video_jp.mp4`;
 
@@ -338,7 +356,6 @@
 
         ctx.font = `400 ${fontSize}px 'Montserrat', sans-serif`;
 
-        // Procesamiento adaptado para texto (gestiona espacios o caracteres de forma fluida)
         const words = text.includes(' ') ? text.split(' ') : text.split('');
         let lines = [];
         let currentLine = words[0];
