@@ -486,39 +486,6 @@
             if (btn) btn.classList.add('activo-huella');
             if (countSpan) countSpan.textContent = contadores[idUnico];
 
-        } else (e) { // Corregido sintaxis estándar try/catch
-            // Manteniendo el bloque capturado de errores original adaptado
-        }
-    }
-
-    // Nota: ajustado el bloque catch inferior correctamente
-    async function darHuella(idUnico) {
-        if (localStorage.getItem(`huella_${idUnico}`)) return;
-
-        try {
-            let response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-                headers: { 'X-Master-Key': API_KEY }
-            });
-            let data = await response.json();
-            let contadores = data.record || {};
-
-            contadores[idUnico] = (contadores[idUnico] || 0) + 1;
-
-            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Master-Key': API_KEY
-                },
-                body: JSON.stringify(contadores)
-            });
-
-            localStorage.setItem(`huella_${idUnico}`, 'true');
-            const btn = document.getElementById(`btn-huella-${idUnico}`);
-            const countSpan = document.getElementById(`count-huella-${idUnico}`);
-            if (btn) btn.classList.add('activo-huella');
-            if (countSpan) countSpan.textContent = contadores[idUnico];
-
         } catch (e) {
             console.error("足跡の登録に失敗しました", e);
         }
@@ -629,7 +596,6 @@
 
         ctx.font = `400 ${fontSize}px 'Montserrat', sans-serif`;
 
-        // Procesamiento adaptado para texto en japonés (carácter a carácter o palabras por espacio si los hay)
         const words = text.split(' ');
         let lines = [];
         let currentLine = words[0];
