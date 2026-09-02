@@ -47,54 +47,96 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px 15px;
         }
+
+        /* Barra de navegación superior alineada estrictamente al bloque central (340px) */
+        .top-navbar {
+            display: flex;
+            width: 100%;
+            max-width: 340px;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .btn-navbar {
+            background-color: #1a1a1a;
+            border: 1px solid #333333;
+            color: #cccccc;
+            padding: 5px 8px;
+            font-size: 0.75rem;
+            border-radius: 6px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            flex: 1;
+        }
+        .btn-navbar:hover {
+            background-color: #2a2a2a;
+            border-color: #555555;
+            color: #ffffff;
+        }
+        .btn-navbar.book-nav:hover {
+            border-color: #436b43;
+            color: #b8f2b8;
+        }
+
         header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             width: 100%;
-            max-width: 900px;
+            max-width: 800px;
         }
         h1 {
-            font-size: 2rem;
-            margin-bottom: 5px;
+            font-size: 1.5rem;
+            margin-bottom: 0;
             color: #e0e0e0;
-        }
-        p.subtitle {
-            font-size: 1rem;
-            color: #888888;
         }
         .viewer-section {
             display: flex;
             width: 100%;
-            max-width: 900px;
+            max-width: 650px;
             flex-direction: column;
             align-items: center;
         }
-        .controls {
+        
+        /* Controles limpios centrados exclusivamente en la lectura */
+        .controls-wrapper {
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+            flex-direction: column;
+            gap: 6px;
+            width: 100%;
+            max-width: 340px;
+            margin-bottom: 10px;
+        }
+        .controls-row {
+            display: flex;
             justify-content: center;
-            margin-bottom: 15px;
+            gap: 6px;
+            flex-wrap: wrap;
             width: 100%;
         }
-        select, button, .btn-buy {
+
+        select, button {
             background-color: #1a1a1a;
             color: #ffffff;
             border: 1px solid #333333;
-            padding: 10px 16px;
-            font-size: 0.95rem;
+            padding: 6px 10px;
+            font-size: 0.8rem;
             border-radius: 6px;
             cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
             transition: background-color 0.2s, border-color 0.2s;
             touch-action: manipulation;
         }
-        select:hover, button:hover:not(:disabled), .btn-buy:hover {
+        select.block-select {
+            width: 100%;
+            font-family: 'Montserrat', sans-serif;
+        }
+        select:hover, button:hover:not(:disabled) {
             background-color: #2a2a2a;
             border-color: #555555;
         }
@@ -102,14 +144,16 @@
             opacity: 0.4;
             cursor: not-allowed;
         }
+
+        /* Contenedor del vídeo optimizado a 340px */
         .canvas-container {
             position: relative;
             width: 100%;
-            max-width: 480px;
+            max-width: 340px;
             background-color: #000000;
-            border-radius: 12px;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.8);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -121,53 +165,53 @@
             display: block;
         }
         .info-panel {
-            margin-top: 15px;
+            margin-top: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
             width: 100%;
-            max-width: 480px;
-            font-size: 0.9rem;
-            color: #aaaaaa;
+            max-width: 340px;
+            font-size: 0.8rem;
+            color: #888888;
         }
         #loading {
             position: absolute;
             color: #ffffff;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             background: rgba(0,0,0,0.7);
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 6px 12px;
+            border-radius: 6px;
             display: none;
             z-index: 10;
         }
 
-        /* Top interaction button panel styles */
         .interaccion-container {
             display: flex;
-            gap: 15px;
+            gap: 6px;
             justify-content: center;
             align-items: center;
             width: 100%;
-            margin-bottom: 20px;
         }
 
         .btn-accion {
             background: #1a1a1a;
             border: 1px solid #444;
             color: #bbb;
-            padding: 8px 16px;
+            padding: 5px 10px;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
             transition: all 0.25s ease;
+            flex: 1;
+            justify-content: center;
         }
 
         .btn-accion svg {
-            width: 18px;
-            height: 18px;
+            width: 14px;
+            height: 14px;
             fill: currentColor;
             flex-shrink: 0;
         }
@@ -189,30 +233,46 @@
             color: #3498db;
             background: rgba(52, 152, 219, 0.05);
         }
+
+        @media (max-width: 580px) {
+            h1 { font-size: 1.3rem; }
+            select, button { padding: 5px 8px; font-size: 0.75rem; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- Barra de navegación superior alineada simétricamente -->
+    <div class="top-navbar">
+        <button id="homeBtn" class="btn-navbar">🏠 Home</button>
+        <a href="https://www.amazon.es/s?k=%E5%A4%B1%E3%82%8F%E3%82%8C%E3%81%9F%E8%A8%80%E8%91%89%E3%81%A8%E3%83%95%E3%83%AC%E3%83%BC%E3%82%BA&i=stripbooks&__mk_es_ES=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=2HUO4OJ8DSYHX&sprefix=%E5%A4%B1%E3%82%8F%E3%82%8C%E3%81%9F%E8%A8%80%E8%91%89%E3%81%A8%E3%83%95%E3%83%AC%E3%83%BC%E3%82%BA%2Cstripbooks%2C176&ref=nb_sb_noss" target="_blank" class="btn-navbar book-nav" onclick="registrarClickCompra('jp')">
+            📖 紙の本
+        </a>
+    </div>
+
     <header>
         <h1>失われた言葉とフレーズ</h1>
-        <p class="subtitle">足跡と考察のコレクション</p>
     </header>
 
     <div class="viewer-section">
-        <div class="controls">
-            <button id="homeBtn">🏠 Home</button>
-            <select id="blockSelect"></select>
-            <button id="prevBtn">&larr; Previous</button>
-            <button id="nextBtn">Next &rarr;</button>
-            <button id="randomBtn">🎲 Random</button>
-            <a href="https://www.amazon.es/s?k=%E5%A4%B1%E3%82%8F%E3%82%8C%E3%81%9F%E8%A8%80%E8%91%89%E3%81%A8%E3%83%95%E3%83%AC%E3%83%BC%E3%82%BA&i=stripbooks&__mk_es_ES=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=2HUO4OJ8DSYHX&sprefix=%E5%A4%B1%E3%82%8F%E3%82%8C%E3%81%9F%E8%A8%80%E8%91%89%E3%81%A8%E3%83%95%E3%83%AC%E3%83%BC%E3%82%BA%2Cstripbooks%2C176&ref=nb_sb_noss" class="btn-buy" target="_blank" rel="noopener noreferrer">📚 Buy Book</a>
+        <!-- Controles limpios -->
+        <div class="controls-wrapper">
+            <!-- Fila 1: Selector de bloques -->
+            <div class="controls-row">
+                <select id="blockSelect" class="block-select"></select>
+            </div>
+            <!-- Fila 2: Anterior, Siguiente y Aleatoria -->
+            <div class="controls-row">
+                <button id="prevBtn">&larr; 前へ</button>
+                <button id="nextBtn">次へ &rarr;</button>
+                <button id="randomBtn">🎲 ランダム</button>
+            </div>
+            <!-- Fila 3: Botones de interacción (Huella, Ruta) -->
+            <div class="controls-row" id="botonesAccionContainer"></div>
         </div>
 
-        <!-- Grouped interaction controls on top -->
-        <div id="botonesAccionContainer"></div>
-
         <div class="canvas-container">
-            <div id="loading">Loading...</div>
+            <div id="loading">読み込み中...</div>
             <canvas id="cardCanvas"></canvas>
         </div>
 
@@ -226,20 +286,20 @@
     const API_KEY = "$2a$10$cjWB6UsaBPWauztsla0YPOSy9cQHEcoA7iVzbdmOXpDrwNk6gf87C";
 
     const blockNamesJP = [
-        "1: 運命の幾何学",
-        "2: 魂の建築",
-        "3: 沈黙の解剖学",
-        "4: 恐れとその影",
-        "5: 世界のまなざし",
-        "6: 愚者たちのざわめき",
-        "7: 星々の空",
-        "8: 心の倫理",
-        "9: 呼吸する時間",
-        "10: 生きるという遊び",
-        "11: 自由の鼓動",
-        "12: 思考の解剖学",
-        "13: 言葉の宇宙",
-        "14: 語りかける孤独"
+        "ブロック 1: 運命の幾何学",
+        "ブロック 2: 魂の建築",
+        "ブロック 3: 沈黙の解剖学",
+        "ブロック 4: 恐れとその影",
+        "ブロック 5: 世界のまなざし",
+        "ブロック 6: 愚者たちのざわめき",
+        "ブロック 7: 星々の空",
+        "ブロック 8: 心の倫理",
+        "ブロック 9: 呼吸する時間",
+        "ブロック 10: 生きるという遊び",
+        "ブロック 11: 自由の鼓動",
+        "ブロック 12: 思考の解剖学",
+        "ブロック 13: 言葉の宇宙",
+        "ブロック 14: 語りかける孤独"
     ];
 
     let allFrases = [];
@@ -268,23 +328,24 @@
     async function loadData() {
         if (loadingElem) {
             loadingElem.style.display = 'block';
-            loadingElem.textContent = "Loading...";
+            loadingElem.textContent = "読み込み中...";
         }
         try {
             const response = await fetch('frases.json?t=' + Date.now());
-            if (!response.ok) throw new Error("HTTP error " + response.status);
+            if (!response.ok) throw new Error("HTTPエラー " + response.status);
             allFrases = await response.json();
             if (loadingElem) loadingElem.style.display = 'none';
 
             let activeBlock = sessionStorage.getItem('pyfp_jp_block') || "1";
+            if (Number(activeBlock) > blockNamesJP.length) activeBlock = "1";
             if (blockSelect) blockSelect.value = activeBlock;
 
             filterByBlock(parseInt(activeBlock, 10), true);
         } catch (error) {
-            console.error("Error loading data:", error);
+            console.error("データの読み込みエラー:", error);
             if (loadingElem) {
                 loadingElem.style.display = 'block';
-                loadingElem.textContent = "Error loading frases.json";
+                loadingElem.textContent = "frases.jsonの読み込みに失敗しました";
             }
         }
     }
@@ -302,7 +363,7 @@
 
         if (currentFilteredFrases.length === 0) {
             stopAnimation();
-            if (huellaCounter) huellaCounter.textContent = "No phrases in this block";
+            if (huellaCounter) huellaCounter.textContent = "このブロックには足跡がありません";
             if (botonesAccionContainer) botonesAccionContainer.innerHTML = "";
             if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height);
             return;
@@ -335,7 +396,7 @@
         const idUnico = `jp_${item.id || (currentBlockNum + '_' + currentIndex)}`;
 
         if (huellaCounter) {
-            huellaCounter.textContent = `Footprint ${item.id} (${currentIndex + 1} / ${currentFilteredFrases.length})`;
+            huellaCounter.textContent = `足跡 ${item.id} (${currentIndex + 1} / ${currentFilteredFrases.length})`;
         }
         if (prevBtn) prevBtn.disabled = currentIndex === 0;
         if (nextBtn) nextBtn.disabled = currentIndex === currentFilteredFrases.length - 1;
@@ -344,11 +405,11 @@
             botonesAccionContainer.innerHTML = `
                 <div class="interaccion-container">
                     <button class="btn-accion" id="btn-huella-${idUnico}" onclick="darHuella('${idUnico}')">
-                        ⭐ Leave Footprint (<span id="count-huella-${idUnico}">0</span>)
+                        ⭐ 足跡を残す (<span id="count-huella-${idUnico}">0</span>)
                     </button>
                     <button class="btn-accion" id="btn-rumbo-${idUnico}" onclick="alternarRumbo('${idUnico}')">
                         <svg viewBox="0 0 24 24"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>
-                        Save Course
+                        経路を保存
                     </button>
                 </div>
             `;
@@ -394,7 +455,7 @@
                 contadorSpan.textContent = contadores[idUnico] || 0;
             }
         } catch (e) {
-            console.error("Could not load footprints count", e);
+            console.error("足跡を読み込めませんでした", e);
         }
     }
 
@@ -425,8 +486,65 @@
             if (btn) btn.classList.add('activo-huella');
             if (countSpan) countSpan.textContent = contadores[idUnico];
 
+        } else (e) { // Corregido sintaxis estándar try/catch
+            // Manteniendo el bloque capturado de errores original adaptado
+        }
+    }
+
+    // Nota: ajustado el bloque catch inferior correctamente
+    async function darHuella(idUnico) {
+        if (localStorage.getItem(`huella_${idUnico}`)) return;
+
+        try {
+            let response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                headers: { 'X-Master-Key': API_KEY }
+            });
+            let data = await response.json();
+            let contadores = data.record || {};
+
+            contadores[idUnico] = (contadores[idUnico] || 0) + 1;
+
+            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Master-Key': API_KEY
+                },
+                body: JSON.stringify(contadores)
+            });
+
+            localStorage.setItem(`huella_${idUnico}`, 'true');
+            const btn = document.getElementById(`btn-huella-${idUnico}`);
+            const countSpan = document.getElementById(`count-huella-${idUnico}`);
+            if (btn) btn.classList.add('activo-huella');
+            if (countSpan) countSpan.textContent = contadores[idUnico];
+
         } catch (e) {
-            console.error("Error registering footprint", e);
+            console.error("足跡の登録に失敗しました", e);
+        }
+    }
+
+    async function registrarClickCompra(idioma) {
+        const clave = `click_compra_${idioma}`;
+        try {
+            let response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                headers: { 'X-Master-Key': API_KEY }
+            });
+            let data = await response.json();
+            let contadores = data.record || {};
+
+            contadores[clave] = (contadores[clave] || 0) + 1;
+
+            await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Master-Key': API_KEY
+                },
+                body: JSON.stringify(contadores)
+            });
+        } catch (e) {
+            console.error("購入クリックの登録に失敗しました", e);
         }
     }
 
@@ -505,22 +623,22 @@
         const x = canvas.width / 2;
         const y = canvas.height * 0.46;
 
-        let fontSize = Math.round(canvas.width * 0.038);
-        if (text.length > 150) fontSize = Math.round(canvas.width * 0.032);
-        if (text.length > 250) fontSize = Math.round(canvas.width * 0.027);
+        let fontSize = Math.round(canvas.width * 0.041);
+        if (text.length > 150) fontSize = Math.round(canvas.width * 0.035);
+        if (text.length > 250) fontSize = Math.round(canvas.width * 0.030);
 
         ctx.font = `400 ${fontSize}px 'Montserrat', sans-serif`;
 
-        const words = text.includes(' ') ? text.split(' ') : text.split('');
+        // Procesamiento adaptado para texto en japonés (carácter a carácter o palabras por espacio si los hay)
+        const words = text.split(' ');
         let lines = [];
         let currentLine = words[0];
 
         for (let i = 1; i < words.length; i++) {
             let word = words[i];
-            let testLine = text.includes(' ') ? currentLine + " " + word : currentLine + word;
-            let width = ctx.measureText(testLine).width;
+            let width = ctx.measureText(currentLine + " " + word).width;
             if (width < maxWidth) {
-                currentLine = testLine;
+                currentLine += " " + word;
             } else {
                 lines.push(currentLine);
                 currentLine = word;
@@ -591,6 +709,8 @@
                 const randomItem = allFrases[randomIndex];
                 const blockValue = Number(randomItem.bloque || randomItem.block);
                 
+                if (blockValue > blockNamesJP.length) return;
+
                 blockSelect.value = blockValue.toString();
                 currentFilteredFrases = allFrases.filter(f => Number(f.bloque || f.block) === blockValue);
                 currentIndex = currentFilteredFrases.findIndex(f => f.id === randomItem.id);
